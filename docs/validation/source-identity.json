@@ -1,0 +1,52 @@
+{
+  "version": "0.3.0",
+  "mainExecutableSha256": "9D5FA29E4472489A1C98D8B36FC8A1C5197FD0031B0CCB336ABA617EB54AB989",
+  "fileVersion": "0.3.0.0",
+  "productVersion": "0.3.0",
+  "signature": "NotSigned",
+  "targetFramework": ".NET Framework 4.8",
+  "targetArchitecture": "AnyCPU",
+  "sourceChangesSincePreviousBuild": "release-version-and-assembly-description-only",
+  "sourceFiles": [
+    {
+      "path": "source/app.manifest",
+      "sha256": "AC4EC1280C2A9557AA3B0E5B5BB734CC34C9B37F353F4021BD739C094D9E78D8"
+    },
+    {
+      "path": "source/ApplicationController.cs",
+      "sha256": "ED2D66383C72F8757D314CE0EA3494251C71084A85BBF27CB977839B72EAE50E"
+    },
+    {
+      "path": "source/build.ps1",
+      "sha256": "85FE3149FCEC0E8A76D478DCD44F74E9E1F31E8C18A02AFB1810F532CB081277"
+    },
+    {
+      "path": "source/LogicTests.cs",
+      "sha256": "3A8ED8B4F583BD7A625F92399325D36A3A160C99B510D76D027367F7B950F240"
+    },
+    {
+      "path": "source/NativeChecks.cs",
+      "sha256": "4562494B381C71D4FB0BD434336F906BC525E6846CF29F3FFA1953FBC42D29BD"
+    },
+    {
+      "path": "source/RuntimeState.cs",
+      "sha256": "06FA6DC7557DF9B268D9D272E1E354366A85D3F85781F7FC266550EEC82B5193"
+    },
+    {
+      "path": "source/ScreenPrivacy.cs",
+      "sha256": "3FA13F002E29EC46E9BD8B2EF59E2BFD8B2D5E743B99CB699CCF39D254626114"
+    },
+    {
+      "path": "source/ScreenPrivacy.exe.config",
+      "sha256": "2EA4C99E3C0A2F7FA50D84DD67D47EE165FC3243A0E526B83724D9B29106442A"
+    },
+    {
+      "path": "source/ScreenPrivacy.ico",
+      "sha256": "23FEA9AF72A75473FAC51074B03D9003CED9BAA689D5DAC5F79D5E085BF79989"
+    },
+    {
+      "path": "source/UserInterface.cs",
+      "sha256": "EBA1AAB314CB4D50DD7DD310DC51D65C28ECCC9EACC9150F5941C21EF6141971"
+    }
+  ]
+}

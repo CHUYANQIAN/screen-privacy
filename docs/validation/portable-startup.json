@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "version": "0.3.0",
+  "scope": "freshly-extracted-portable-package-on-same-local-device",
+  "executableSha256": "9D5FA29E4472489A1C98D8B36FC8A1C5197FD0031B0CCB336ABA617EB54AB989",
+  "maskCount": 0,
+  "hotkeysReady": true,
+  "configurationWritable": true,
+  "defaultPasswordOff": true,
+  "newVisibleMasksCreated": 0,
+  "otherCleanMachineTested": false,
+  "keyboardRecoveryTested": false
+}

@@ -1,0 +1,15 @@
+/build/
+/release/
+/internal/
+*.exe
+*.exe.config
+!source/ScreenPrivacy.exe.config
+**/settings.json
+**/status.json
+**/screen-privacy.log
+*.tmp
+*.pdb
+*.lnk
+.vs/
+bin/
+obj/
