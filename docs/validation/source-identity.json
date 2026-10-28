@@ -1,12 +1,11 @@
 {
-  "version": "0.3.0",
-  "mainExecutableSha256": "9D5FA29E4472489A1C98D8B36FC8A1C5197FD0031B0CCB336ABA617EB54AB989",
-  "fileVersion": "0.3.0.0",
-  "productVersion": "0.3.0",
+  "version": "0.3.1",
+  "mainExecutableSha256": "E01DFF2173AEDCA1F53C509B9E16CCF8FB7D361E556CCB740DA3EE430FEDD172",
+  "fileVersion": "0.3.1.0",
+  "productVersion": "0.3.1",
   "signature": "NotSigned",
   "targetFramework": ".NET Framework 4.8",
   "targetArchitecture": "AnyCPU",
-  "sourceChangesSincePreviousBuild": "release-version-and-assembly-description-only",
   "sourceFiles": [
     {
       "path": "source/app.manifest",
@@ -14,27 +13,43 @@
     },
     {
       "path": "source/ApplicationController.cs",
-      "sha256": "ED2D66383C72F8757D314CE0EA3494251C71084A85BBF27CB977839B72EAE50E"
+      "sha256": "50BB50940AD2DC917A7869E9EB054631208CDAFB9D8697D691341FB515733EB2"
     },
     {
       "path": "source/build.ps1",
       "sha256": "85FE3149FCEC0E8A76D478DCD44F74E9E1F31E8C18A02AFB1810F532CB081277"
     },
     {
+      "path": "source/LifecycleLogicChecks.cs",
+      "sha256": "B93CC4FB1D6759A53ECE6E56DCC454BD4E6D3FB8D50C07BCF61BF6E5234642A6"
+    },
+    {
       "path": "source/LogicTests.cs",
-      "sha256": "3A8ED8B4F583BD7A625F92399325D36A3A160C99B510D76D027367F7B950F240"
+      "sha256": "730194F9B2377083D7E21F676E89005DED8E019AB65635F36EB0F3E6D6CE54D1"
+    },
+    {
+      "path": "source/MaskUiPolicy.cs",
+      "sha256": "515065947E13AF74B1658EF4075406807A517867DC0432B4C2FDA5B7897DEA74"
     },
     {
       "path": "source/NativeChecks.cs",
       "sha256": "4562494B381C71D4FB0BD434336F906BC525E6846CF29F3FFA1953FBC42D29BD"
     },
     {
+      "path": "source/NativeLifecycleChecks.cs",
+      "sha256": "6B1C74583B4D771493301367234E74C0A7EF61AC291A1DE544D0797B59124D36"
+    },
+    {
+      "path": "source/NativeMinimizeChecks.cs",
+      "sha256": "9E90E0EB5DF2FE1B1573342552477470EE90CC1F073DD8C44BC090165F8A1FDF"
+    },
+    {
       "path": "source/RuntimeState.cs",
-      "sha256": "06FA6DC7557DF9B268D9D272E1E354366A85D3F85781F7FC266550EEC82B5193"
+      "sha256": "9E92A876ECFFACE0A454426B1023B9A5CC8744484D3350F5D23A5F0EB5A590E5"
     },
     {
       "path": "source/ScreenPrivacy.cs",
-      "sha256": "3FA13F002E29EC46E9BD8B2EF59E2BFD8B2D5E743B99CB699CCF39D254626114"
+      "sha256": "E7E99774D7BECCB1FC2E05BB9DCB9F757C96B6BE3086E5A121924360BBBBA5FB"
     },
     {
       "path": "source/ScreenPrivacy.exe.config",
@@ -46,7 +61,11 @@
     },
     {
       "path": "source/UserInterface.cs",
-      "sha256": "EBA1AAB314CB4D50DD7DD310DC51D65C28ECCC9EACC9150F5941C21EF6141971"
+      "sha256": "E3085E85409921D04FE461C8C56E9843FEA229F43399CDA938A5A7BA55AE1E00"
+    },
+    {
+      "path": "source/WindowMinimizer.cs",
+      "sha256": "63B82FE8AB35FA8A3F7AD32A4AEF2DC43B7B8B89EB553968DE2909A3849899FF"
     }
   ]
 }

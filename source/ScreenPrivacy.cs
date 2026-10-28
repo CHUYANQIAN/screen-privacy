@@ -15,9 +15,9 @@ using System.Windows.Forms;
 [assembly: AssemblyProduct("屏幕遮蔽")]
 [assembly: AssemblyDescription("实体屏幕遮蔽与活动桌面辅助工具")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyVersion("0.3.0.0")]
-[assembly: AssemblyFileVersion("0.3.0.0")]
-[assembly: AssemblyInformationalVersion("0.3.0")]
+[assembly: AssemblyVersion("0.3.1.0")]
+[assembly: AssemblyFileVersion("0.3.1.0")]
+[assembly: AssemblyInformationalVersion("0.3.1")]
 [assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.8", FrameworkDisplayName=".NET Framework 4.8")]
 
 internal static class Native {
@@ -64,6 +64,7 @@ internal sealed class AppConfig {
     public Hotkey RestoreHotkey { get; set; }
     public bool PasswordEnabled { get; set; }
     public bool MainUpdateStyle { get; set; }
+    public bool MinimizeOnRestore { get; set; }
     public string Salt { get; set; }
     public string PasswordHash { get; set; }
     public int Iterations { get; set; }
@@ -95,7 +96,7 @@ internal sealed class AppConfig {
     }
     public void Save(string path) {
         Validate(); string temp=path+"."+Guid.NewGuid().ToString("N")+".tmp";
-        var preferences=new { Version=Version,MainHotkey=MainHotkey,SecondaryHotkey=SecondaryHotkey,RestoreHotkey=RestoreHotkey,MainUpdateStyle=MainUpdateStyle,PasswordEnabled=PasswordEnabled,PasswordEntries=PasswordEntries,PasswordMode="remembered-with-startup-reset" };
+        var preferences=new { Version=Version,MainHotkey=MainHotkey,SecondaryHotkey=SecondaryHotkey,RestoreHotkey=RestoreHotkey,MainUpdateStyle=MainUpdateStyle,MinimizeOnRestore=MinimizeOnRestore,PasswordEnabled=PasswordEnabled,PasswordEntries=PasswordEntries,PasswordMode="remembered-with-startup-reset" };
         try {
             File.WriteAllText(temp,new JavaScriptSerializer().Serialize(preferences));
             if(File.Exists(path)) File.Replace(temp,path,null); else File.Move(temp,path);

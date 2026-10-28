@@ -1,35 +1,33 @@
-# v0.3.0 验证与文件身份
+# v0.3.1 修复与验证
 
-日期：2026-10-28（Asia/Shanghai）。作者已确认完成本机使用检查。此次重建只更新发行版本信息，功能逻辑保持一致；没有将作者的确认补写为不存在的逐用例录像或测量数据。
+日期：2026-10-28（Asia/Shanghai）。
 
-## 文件
+## 行为
 
-| 项目 | 值 |
-| --- | --- |
-| 标签与产品版本 | v0.3.0 / 0.3.0 |
-| 数字文件版本 | 0.3.0.0 |
-| 分发包 | `ScreenPrivacy-v0.3.0-windows-anycpu.zip` |
-| 分发包 SHA-256 | `8C5A92A40447056E0673EAB3F2BEF6614F07AEEA9950832AF172B3C51C9CC380` |
-| 主程序 SHA-256 | `9D5FA29E4472489A1C98D8B36FC8A1C5197FD0031B0CCB336ABA617EB54AB989` |
-| 签名 | NotSigned |
-| 许可 | MIT，CHUYANQIAN |
+只遮蔽部分屏幕时，控制面板完整放在未遮蔽屏幕；全部遮蔽时隐藏，进程与恢复热键继续运行。未勾选最小化选项时，最后一块遮罩解除后面板返回原位置。新增的一键全部遮蔽只补齐未遮蔽屏幕，不反向恢复。
 
-下载包包含 `app/ScreenPrivacy.exe`、兼容恢复入口、两个 `.config`、使用说明和 LICENSE。未包含用户配置、密码派生记录或运行日志。
+勾选“恢复遮蔽后最小化所有应用窗口”后，成功授权并准备解除最后一块遮罩时，先向普通应用发送最小化请求并短时确认；本面板随后也最小化，再解除遮罩。未勾选、取消、验证失败、部分恢复或空恢复不会触发。软件不关闭这些应用，也不会无限等待不响应窗口。
 
-## 检查记录
+## 本轮结果
 
-| 项目 | 本轮结果 | 范围 |
+| 项目 | 结果 | 范围 |
 | --- | --- | --- |
-| 作者本机使用检查 | 作者确认完成 | 高层使用确认；未提供公开摄像原片或逐项计数 |
-| [逻辑检查](validation/self-test.json) | 97/97 | 实际生产模型；零可见遮罩 |
-| [原生热键检查](validation/native-hotkey-checks.json) | 5/5 | 35 次登记、39 次独立探针；没有发送按键 |
-| [默认键位隐藏窗口](validation/hidden-capabilities.json) | 通过 | 两屏隐藏窗口属性准备与读回 |
-| [自定义键位隐藏窗口](validation/custom-hidden-capabilities.json) | 通过 | 恢复键改为 Ctrl+Alt+Shift+F6，F10 可分配主屏 |
-| [便携包首次启动](validation/portable-startup.json) | 通过 | 本机新解压目录，配置可写、默认零遮蔽、默认密码关闭、三键就绪；未代表另一台设备 |
-| [源码身份](validation/source-identity.json) | 已记录 | 实际构建输入逐文件 SHA-256 |
+| [逻辑](validation/self-test.json) | 159/159 | 默认值、配置迁移、密码记录保真、覆盖分组、布局、恢复和最小化筛选 |
+| [Win32 热键](validation/native-hotkey-checks.json) | 5/5 | 实际注册与冲突/失败回退；不发送按键 |
+| [默认隐藏窗口](validation/hidden-capabilities.json) / [自定义键位](validation/custom-hidden-capabilities.json) | 通过 | 属性准备和读回 |
+| [原生最小化](validation/native-minimization.json) | 2/2 测试应用窗口 | 真实窗口最小化及本进程内部窗口排除 |
+| [实际控制器流程](validation/native-mask-lifecycle.json) | 22/22 | 真实两屏遮罩、部分屏面板定位、全部覆盖、恢复后进程存活、选项关闭不最小化、选项开启时两测试窗口和本面板均最小化、保活释放 |
 
-构建命令：`./tools/build.ps1 -OutputDirectory <独立输出目录>`。构建使用 Windows .NET Framework 编译器；再次构建可能有不同二进制哈希，需重新记录。
+用户在慢速观察中确认屏幕遮蔽正确、面板仍可见，初步符合预期。随后按“恢复时最小化所有软件”的澄清，将本面板纳入最小化，再对最终二进制重跑上述检查。没有把两个测试窗口的结果外推为任意系统/权限/特殊窗口均可控制。
 
-环境：Windows build 26300.9711（DisplayVersion 26H2），x64；.NET 注册表版本 4.8.10008、Release 534296；系统 AppliedDPI=144（150%）。主屏 2560×1600 位于 (0,0)，一块副屏 2560×734 位于 (0,1600)。已查询的 Codex 桌面包版本为 26.1023.6123.0；界面查看使用 computer-use / @oai/sky。没有据此宣称其他捕获工具或每屏缩放组合均兼容。
+测试使用独立无密码配置，最小化仅作用于专用测试窗口及本面板；未改变用户工作窗口或真实密码配置。原密码 GUI、真实键盘热键触发、遮蔽下的新截图读回、热插拔、混合 DPI、长期性能和其他机器没有在这轮重新执行。
 
-仓库五张界面 PNG 来自该 EXE 的隐藏 WinForms 控件合成渲染。它们是静态布局图，不是双视角实拍。[演示说明](DEMO.md)记录现有素材及未来拍摄步骤。[兼容性说明](COMPATIBILITY.md)列出其他未覆盖环境。
+## 身份
+
+- 产品/数字版本：0.3.1 / 0.3.1.0。
+- EXE SHA-256：`E01DFF2173AEDCA1F53C509B9E16CCF8FB7D361E556CCB740DA3EE430FEDD172`。
+- 下载包：`ScreenPrivacy-v0.3.1-windows-anycpu.zip`。
+- ZIP SHA-256：`2074868EFB94DD88C55A5D4F318CC99ACD0202ECE97EE99714CCAD5C1C2DD744`。
+- [源码文件身份](validation/source-identity.json)；AnyCPU，.NET Framework 4.8，NotSigned，MIT。
+
+环境仍为本机 Windows build 26300.9711、.NET 4.8.10008；主屏 2560×1600，副屏 2560×734。其它环境见[兼容性说明](COMPATIBILITY.md)。五张 PNG 为该二进制的隐藏控件静态渲染，非实体实拍。

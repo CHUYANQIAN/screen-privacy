@@ -266,11 +266,11 @@ internal static class LogicTests {
 
         var session=new SessionState();
         r.Check("new_process_opens_password_reset_window",delegate { return session.PasswordResetAllowed; });
-        r.Check("panel_allowed_only_when_no_masks_and_not_exiting",delegate { return session.CanShowPanel(0,false) && !session.CanShowPanel(0,true) && !session.CanShowPanel(1,false) && !session.CanShowPanel(3,false); });
+        r.Check("panel_allowed_with_available_display_and_not_exiting",delegate { return session.CanShowPanel(1,false) && session.CanShowPanel(3,false) && !session.CanShowPanel(0,false) && !session.CanShowPanel(1,true); });
         r.Check("panel_queries_do_not_close_reset_window",delegate { session.CanShowPanel(1,false); session.CanShowPanel(0,false); return session.PasswordResetAllowed; });
         session.MaskCommitted();
         r.Check("successful_mask_commit_closes_reset_window",delegate { return !session.PasswordResetAllowed; });
-        r.Check("restored_desktop_does_not_reopen_reset_window",delegate { return session.CanShowPanel(0,false) && !session.PasswordResetAllowed; });
+        r.Check("restored_desktop_does_not_reopen_reset_window",delegate { return session.CanShowPanel(1,false) && !session.PasswordResetAllowed; });
         session.MaskCommitted();
         r.Check("later_mask_commits_keep_reset_window_closed",delegate { return !session.PasswordResetAllowed; });
         r.Check("new_session_gets_independent_reset_window",delegate { return new SessionState().PasswordResetAllowed && !session.PasswordResetAllowed; });

@@ -1,6 +1,6 @@
 {
-  "version": "0.3.0",
-  "executableSha256": "9D5FA29E4472489A1C98D8B36FC8A1C5197FD0031B0CCB336ABA617EB54AB989",
+  "version": "0.3.1",
+  "executableSha256": "E01DFF2173AEDCA1F53C509B9E16CCF8FB7D361E556CCB740DA3EE430FEDD172",
   "scope": "public-interface-illustrations-and-abstract-cover-only",
   "date": "2026-10-28",
   "timezone": "Asia/Shanghai",
@@ -13,10 +13,10 @@
     {
       "path": "main-panel.png",
       "kind": "actual-WinForms-controls-hidden-DrawToBitmap-static-layout",
-      "sourceRelativePath": "UiSnapshots-v0.3.0/main-panel.png",
-      "bytes": 49163,
-      "sha256": "929B1174E3AF3281E282A5D59D749DABF091DA344EC71166F62BB238AF748B72",
-      "sourceSha256": "929B1174E3AF3281E282A5D59D749DABF091DA344EC71166F62BB238AF748B72",
+      "sourceRelativePath": "UiSnapshots-v0.3.1/main-panel.png",
+      "bytes": 52782,
+      "sha256": "5CB73BFAE5242216899DDB24C57DC5C0B6AC3AEDB1E5FD17FA2ACFE1F15C3393",
+      "sourceSha256": "5CB73BFAE5242216899DDB24C57DC5C0B6AC3AEDB1E5FD17FA2ACFE1F15C3393",
       "sourceUnmodified": true,
       "realDesktopScreenshot": false,
       "physicalDisplayEvidence": false,
@@ -27,10 +27,10 @@
     {
       "path": "settings-general.png",
       "kind": "actual-WinForms-controls-hidden-DrawToBitmap-static-layout",
-      "sourceRelativePath": "UiSnapshots-v0.3.0/settings-general.png",
-      "bytes": 35096,
-      "sha256": "56C7B7C97A8B99285AB8F7B2DBDAE886C1F701EBF4802CBD1FBF3F5E81D03833",
-      "sourceSha256": "56C7B7C97A8B99285AB8F7B2DBDAE886C1F701EBF4802CBD1FBF3F5E81D03833",
+      "sourceRelativePath": "UiSnapshots-v0.3.1/settings-general.png",
+      "bytes": 44499,
+      "sha256": "7F4B57BA4344A2543252AA21A2F3383B480A36C2195013A2010C48D9232E5EDE",
+      "sourceSha256": "7F4B57BA4344A2543252AA21A2F3383B480A36C2195013A2010C48D9232E5EDE",
       "sourceUnmodified": true,
       "realDesktopScreenshot": false,
       "physicalDisplayEvidence": false,
@@ -41,7 +41,7 @@
     {
       "path": "settings-hotkeys.png",
       "kind": "actual-WinForms-controls-hidden-DrawToBitmap-static-layout",
-      "sourceRelativePath": "UiSnapshots-v0.3.0/settings-hotkeys.png",
+      "sourceRelativePath": "UiSnapshots-v0.3.1/settings-hotkeys.png",
       "bytes": 37059,
       "sha256": "32E298622479F75759B32227BA49726E94351039441E43ABF620645F5F11EBE5",
       "sourceSha256": "32E298622479F75759B32227BA49726E94351039441E43ABF620645F5F11EBE5",
@@ -55,7 +55,7 @@
     {
       "path": "settings-passwords.png",
       "kind": "actual-WinForms-controls-hidden-DrawToBitmap-static-layout",
-      "sourceRelativePath": "UiSnapshots-v0.3.0/settings-passwords.png",
+      "sourceRelativePath": "UiSnapshots-v0.3.1/settings-passwords.png",
       "bytes": 38163,
       "sha256": "A53C6761487A5BAD0243C549857C8C9B226AE8E1425424EFAC11D101B26E4789",
       "sourceSha256": "A53C6761487A5BAD0243C549857C8C9B226AE8E1425424EFAC11D101B26E4789",
@@ -69,7 +69,7 @@
     {
       "path": "restore-password.png",
       "kind": "actual-WinForms-controls-hidden-DrawToBitmap-static-layout",
-      "sourceRelativePath": "UiSnapshots-v0.3.0/restore-password.png",
+      "sourceRelativePath": "UiSnapshots-v0.3.1/restore-password.png",
       "bytes": 16009,
       "sha256": "898C6E8701CDBF11B0D6344C4795223419FCE27C9F50B5C7B911326122E1D35F",
       "sourceSha256": "898C6E8701CDBF11B0D6344C4795223419FCE27C9F50B5C7B911326122E1D35F",
@@ -83,8 +83,8 @@
     {
       "path": "screenprivacy-cover.svg",
       "kind": "code-native-original-abstract-cover",
-      "bytes": 2839,
-      "sha256": "8C65CE375AA5B8C36DE71E8602877E39EE06ADDCD1BBAA999BEBFB33D027DBB9",
+      "bytes": 2872,
+      "sha256": "CAFA01FFCFD572B735BD8D080A3D0A36A93EDB69F72FC1A8E7DC14DE44DCFA3D",
       "realDesktopScreenshot": false,
       "physicalDisplayEvidence": false,
       "captureUnderMaskEvidence": false,
@@ -93,5 +93,5 @@
     }
   ],
   "ownerReportedLocalCheck": "CONFIRMED_BY_OWNER",
-  "versionBindingStatus": "MATCHES_v0.3.0_RENDER_BUILD"
+  "versionBindingStatus": "MATCHES_v0.3.1_RENDER_BUILD"
 }

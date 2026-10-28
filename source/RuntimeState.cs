@@ -27,7 +27,7 @@ internal sealed class SessionState {
     internal bool PasswordResetAllowed { get; private set; }
     internal SessionState() { PasswordResetAllowed=true; }
     internal void MaskCommitted() { PasswordResetAllowed=false; }
-    internal bool CanShowPanel(int masks,bool exiting) { return masks==0 && !exiting; }
+    internal bool CanShowPanel(int availableDisplayCount,bool exiting) { return availableDisplayCount>0 && !exiting; }
 }
 
 internal interface IHotkeyBackend {

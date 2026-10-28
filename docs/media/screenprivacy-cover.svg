@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title description">
   <title id="title">屏幕遮蔽，调试继续</title>
-  <desc id="description">ScreenPrivacy 0.3.0 的抽象宣传图。为 AI 桌面调试提供临时防旁观遮蔽，自定义全局快捷键恢复。右侧显示器为抽象图示，不是实测画面。</desc>
+  <desc id="description">ScreenPrivacy 0.3.1 的抽象宣传图。为 AI 桌面调试提供临时防旁观遮蔽，自定义全局快捷键恢复。右侧显示器为抽象图示，不是实测画面。</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F5F7FA"/><stop offset="1" stop-color="#EAF0FB"/></linearGradient>
     <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172235"/><stop offset="1" stop-color="#0D1421"/></linearGradient>
@@ -10,7 +10,7 @@
   <g font-family="Microsoft YaHei UI, Noto Sans CJK SC, PingFang SC, sans-serif">
     <text x="64" y="91" font-size="23" font-weight="600" letter-spacing="1.2" fill="#2463D2">ScreenPrivacy · 屏幕遮蔽</text>
     <rect x="64" y="120" width="333" height="38" rx="19" fill="#E1EAFB"/>
-    <text x="84" y="145" font-size="17" fill="#244E96">0.3.0 · 界面示意</text>
+    <text x="84" y="145" font-size="17" fill="#244E96">0.3.1 · 界面示意</text>
     <text x="64" y="236" font-size="58" font-weight="700" fill="#182230">屏幕遮蔽，</text>
     <text x="64" y="309" font-size="58" font-weight="700" fill="#182230">调试继续。</text>
     <text x="66" y="367" font-size="24" fill="#5C6777">为 AI 桌面调试提供临时防旁观遮蔽</text>

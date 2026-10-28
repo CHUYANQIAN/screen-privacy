@@ -63,7 +63,8 @@ internal static class Theme {
     }
     internal static string Help(Hotkey restore) {
         return "屏幕遮蔽 " + Program.ProductVersion + "\n\n"+
-            "开启后控制面板会隐藏。按当前恢复快捷键 "+restore+" 恢复全部屏幕；开启恢复密码时，输入任一已保存密码后按 Enter。Esc 取消恢复，屏幕继续遮蔽。\n\n"+
+            "可先点击“遮蔽全部屏幕”一次开启全部遮罩。只遮蔽部分屏幕时，面板保留在未遮蔽屏幕；全部屏幕遮蔽时隐藏，但软件仍在运行。按当前恢复快捷键 "+restore+" 恢复全部屏幕，面板按常规设置显示或最小化。开启恢复密码时，输入任一已保存密码后按 Enter；Esc 取消恢复，屏幕继续遮蔽。\n\n"+
+            "设置 → 常规可勾选“恢复遮蔽后最小化所有应用窗口”。默认关闭；开启后，在最后一块遮罩解除时最小化工作窗口，包括本面板。程序继续运行，可从任务栏或托盘唤回。个别无法控制的窗口可能例外。右上角关闭只会收起到托盘，退出程序请使用“退出软件”。\n\n"+
             "遮罩保留活动桌面和点击穿透，便于兼容的 Codex 截图与操作。请勿在看不见底下内容时盲目点击。截图兼容性需在实际环境确认；本软件用于现场防旁观，不替代 Windows 锁屏。\n\n"+
             "模拟更新仅模拟画面，不执行 Windows 更新，不重启，也不会随进度自动恢复。副屏始终使用纯黑遮罩。\n\n"+
             "忘记密码后，可结束软件并重新启动，在首次开启遮蔽前重设。关闭窗口到托盘不算重新启动；软件结束时遮罩也会解除。\n\n"+
@@ -92,16 +93,18 @@ internal sealed class MonitorGlyph : Control {
 
 internal sealed class ControlForm : Form {
     internal bool Exiting;
-    internal Button MainButton,SecondaryButton,SettingsButton;
+    internal Button MainButton,SecondaryButton,AllButton,SettingsButton;
     private Label mainState,secondaryState,secondaryDescription,mainKey,secondaryKey,restoreKey,registrationState,passwordState,problemText;
     private Button modifyKey;
     private AppConfig currentConfig;
     internal ControlForm(PrivacyContext context) {
-        Text="屏幕遮蔽"; Theme.Form(this,new Size(660,570)); StartPosition=FormStartPosition.CenterScreen; MinimumSize=new Size(400,340);
+        Text="屏幕遮蔽"; Theme.Form(this,new Size(660,620)); StartPosition=FormStartPosition.CenterScreen; MinimumSize=new Size(400,340);
         Panel scroll=new Panel { Dock=DockStyle.Fill,AutoScroll=true,Padding=new Padding(24) }; Controls.Add(scroll);
         TableLayoutPanel content=Theme.Vertical(); scroll.Controls.Add(content);
         Theme.Row(content,Theme.Heading("屏幕遮蔽，调试继续",18F));
         Label subtitle=Theme.Label("遮住实体屏幕，保留活动桌面，方便 Codex 继续截图和操作。",true); Theme.Wrap(content,subtitle); Theme.Row(content,subtitle);
+        AllButton=Theme.Button("遮蔽全部屏幕",true); AllButton.Dock=DockStyle.Top; AllButton.Margin=new Padding(0,8,0,4); AllButton.AccessibleName="一键遮蔽全部屏幕";
+        AllButton.Click+=delegate { context.CoverAll(); }; Theme.Row(content,AllButton);
         TableLayoutPanel cards=new TableLayoutPanel { Dock=DockStyle.Top,AutoSize=true,ColumnCount=2,Margin=new Padding(0,12,0,0) };
         cards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50)); cards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50));
         SurfacePanel mainCard=MakeCard("主屏","系统主显示器",out mainState,out mainKey,out MainButton,null);
@@ -118,7 +121,7 @@ internal sealed class ControlForm : Form {
         keyLine.Controls.Add(registrationState); keyLine.Controls.Add(modifyKey); Theme.Row(restoreContent,keyLine); Theme.Row(content,restorePanel);
         passwordState=Theme.Label(""); Theme.Row(content,passwordState);
         problemText=Theme.Label(""); problemText.ForeColor=Theme.Error; Theme.Wrap(content,problemText); Theme.Row(content,problemText);
-        Label note=Theme.Label("启动默认不遮蔽。开启后面板隐藏；遮蔽期间请避免盲目点击底下应用。",true); Theme.Wrap(content,note); Theme.Row(content,note);
+        Label note=Theme.Label("软件会继续运行：部分遮蔽时面板留在未遮蔽屏幕，恢复后按设置显示或最小化。右上角关闭只收起到托盘。",true); Theme.Wrap(content,note); Theme.Row(content,note);
         FlowLayoutPanel footer=new FlowLayoutPanel { Dock=DockStyle.Top,AutoSize=true,Margin=new Padding(0,8,0,0) };
         SettingsButton=Theme.Button("设置"); SettingsButton.AccessibleName="打开遮蔽设置"; SettingsButton.Click+=delegate { context.EditSettings(); }; footer.Controls.Add(SettingsButton);
         Button help=Theme.Button("使用说明 / 关于"); help.Click+=delegate { if(currentConfig!=null) MessageBox.Show(this,Theme.Help(currentConfig.RestoreHotkey),"使用说明与关于",MessageBoxButtons.OK,MessageBoxIcon.Information); }; footer.Controls.Add(help);
@@ -134,12 +137,13 @@ internal sealed class ControlForm : Form {
         state=Theme.Label("正常显示"); Theme.Row(rows,state); key=Theme.Label("",true); key.AccessibleName=title+"切换快捷键"; Theme.Row(rows,key);
         button=Theme.Button("",true); button.Dock=DockStyle.Top; button.Margin=Padding.Empty; Theme.Row(rows,button); return card;
     }
-    internal void RefreshStatus(AppConfig config,bool mainReady,bool secondaryReady,bool restoreReady,bool main,bool secondary,int secondaryCount,string problem) {
+    internal void RefreshStatus(AppConfig config,bool mainReady,bool secondaryReady,bool restoreReady,bool main,bool secondary,int secondaryCount,string problem,bool allReady=true) {
         currentConfig=config; mainState.Text=main?"已遮蔽":"正常显示";
         secondaryState.Text=secondaryCount==0?"连接显示器后可使用":secondary?"已遮蔽":"正常显示";
         secondaryDescription.Text=secondaryCount==0?"未检测到副屏":"共 "+secondaryCount+" 台显示器";
         mainKey.Text="切换："+config.MainHotkey; secondaryKey.Text="切换："+config.SecondaryHotkey;
         MainButton.Enabled=restoreReady && mainReady && !main; SecondaryButton.Enabled=restoreReady && secondaryReady && secondaryCount>0 && !secondary;
+        AllButton.Enabled=restoreReady && allReady;
         SettingsButton.Enabled=!main && !secondary; modifyKey.Enabled=SettingsButton.Enabled;
         restoreKey.Text=config.RestoreHotkey.ToString(); registrationState.Text=restoreReady?"恢复快捷键已就绪":"恢复快捷键不可用";
         registrationState.ForeColor=restoreReady?Theme.Success:Theme.Error;
@@ -235,7 +239,7 @@ internal sealed class SettingsForm : Form {
     private readonly HotkeyBox mainKey,secondaryKey,restoreKey;
     private readonly Label[] keyErrors=new Label[3];
     private readonly PasswordSlot[] slots=new PasswordSlot[3];
-    private readonly CheckBox passwordEnabled;
+    private readonly CheckBox passwordEnabled,minimizeOnRestore;
     private readonly RadioButton updateStyle;
     private readonly TextBox currentPassword;
     private readonly Label error;
@@ -255,6 +259,8 @@ internal sealed class SettingsForm : Form {
         StylePreview preview=new StylePreview { UpdateStyle=config.MainUpdateStyle }; Theme.Row(general,preview); updateStyle.CheckedChanged+=delegate { preview.UpdateStyle=updateStyle.Checked; preview.Invalidate(); };
         Label simulation=Theme.Label("仅模拟画面，不执行 Windows 更新，不重启，也不会随进度自动解除遮蔽。副屏始终保持纯黑。",true); Theme.Wrap(general,simulation); Theme.Row(general,simulation);
         Label power=Theme.Label("启动默认不遮蔽。遮蔽期间临时请求保持显示与系统活动，恢复全部后释放；不修改电源计划。",true); Theme.Wrap(general,power); Theme.Row(general,power);
+        minimizeOnRestore=new CheckBox { Text="恢复遮蔽后最小化所有应用窗口",AutoSize=true,Checked=config.MinimizeOnRestore,Margin=new Padding(0,12,0,8),AccessibleName="恢复遮蔽后最小化所有应用窗口" }; Theme.Row(general,minimizeOnRestore);
+        Label minimizeHelp=Theme.Label("包含本面板；程序继续运行，可从任务栏或托盘唤回。仅在最后一块遮罩解除时执行，个别无法控制的窗口可能例外。",true); Theme.Wrap(general,minimizeHelp); Theme.Row(general,minimizeHelp);
         TableLayoutPanel keys=TabContent("快捷键"); Theme.Row(keys,Theme.Heading("全局快捷键"));
         Label keyHelp=Theme.Label("选择录入框，再按新的组合键。录入时暂时停用全局键；Tab 离开，Esc 取消本次录入。三个动作不能重复。",true); Theme.Wrap(keys,keyHelp); Theme.Row(keys,keyHelp);
         mainKey=KeyField(keys,"主屏遮蔽切换",config.MainHotkey,0); secondaryKey=KeyField(keys,"全部副屏遮蔽切换",config.SecondaryHotkey,1); restoreKey=KeyField(keys,"恢复全部屏幕",config.RestoreHotkey,2);
@@ -300,7 +306,7 @@ internal sealed class SettingsForm : Form {
         try {
             HotkeyBox[] allKeys=new[] { mainKey,secondaryKey,restoreKey };
             if(allKeys.Any(k=>!String.IsNullOrEmpty(k.ValidationError))) { tabs.SelectedIndex=1; throw new InvalidDataException("请修正快捷键输入；无效组合未替换当前值。"); }
-            candidate=original.Copy(); candidate.MainHotkey=new Hotkey(mainKey.Value.Modifiers,mainKey.Value.Key); candidate.SecondaryHotkey=new Hotkey(secondaryKey.Value.Modifiers,secondaryKey.Value.Key); candidate.RestoreHotkey=new Hotkey(restoreKey.Value.Modifiers,restoreKey.Value.Key); candidate.MainUpdateStyle=updateStyle.Checked;
+            candidate=original.Copy(); candidate.MainHotkey=new Hotkey(mainKey.Value.Modifiers,mainKey.Value.Key); candidate.SecondaryHotkey=new Hotkey(secondaryKey.Value.Modifiers,secondaryKey.Value.Key); candidate.RestoreHotkey=new Hotkey(restoreKey.Value.Modifiers,restoreKey.Value.Key); candidate.MainUpdateStyle=updateStyle.Checked; candidate.MinimizeOnRestore=minimizeOnRestore.Checked;
             candidate.MainHotkey.Validate(); candidate.SecondaryHotkey.Validate(); candidate.RestoreHotkey.Validate();
             if(candidate.MainHotkey.Same(candidate.SecondaryHotkey)) { tabs.SelectedIndex=1; throw new InvalidDataException("主屏和全部副屏使用了相同组合，请选择不同的快捷键。"); }
             if(candidate.RestoreHotkey.Same(candidate.MainHotkey) || candidate.RestoreHotkey.Same(candidate.SecondaryHotkey)) { tabs.SelectedIndex=1; throw new InvalidDataException("恢复全部快捷键不能与主屏或全部副屏的切换键重复。"); }
